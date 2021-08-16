@@ -1,7 +1,47 @@
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
+import Display from '../Display'
 
+const testShow = {
+    name: "Greatest Show",
+    summary: "Best greatest show ever!",
+    seasons: [
+        {id:0, name: 'Season 1', episodes:[]},
+        {id:1, name: 'Season 2', episodes:[]},
+        {id:2, name: 'Season 3', episodes:[]}
+    ]
+}
 
+test("renders with no props passed in without error", () => {
+    render(<Display />)
+});
 
+test('render component when button is clicked', async () => {
+    render(<Display show={testShow} />)
+    const show = screen.queryByTestId('show-container')
+    waitFor(() => expect(show).toBeInTheDocument())
+
+    const button = screen.getByRole('button')
+    userEvent.click(button)
+    })
+
+test('test to have correct number of seasons', () => {
+    render(<Display show={testShow} />)
+    const button = screen.getByRole('button')
+    userEvent.click(button)
+    waitFor(() => expect(screen.getAllByTestId('season-option')).toHaveLength(testShow.seasons.length));
+})
+
+const mockClick = jest.fn()
+
+test('test if optional function is being called', () => {
+    render(<Display handleClick={mockClick} />)
+    const button = screen.getByRole('button')
+    userEvent.click(button)
+    waitFor(() => expect(mockClick).toHaveBeenCalledTimes(1))
+})
 
 
 
