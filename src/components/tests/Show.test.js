@@ -5,7 +5,13 @@ import userEvent from '@testing-library/user-event';
 import Show from './../Show';
 
 const testShow = {
-    //add in approprate test data structure here.
+    name: "Greatest Show",
+    summary: "Best greatest show ever",
+    seasons: [
+        {id:0, name: 'Season 1', episodes:[]},
+        {id:1, name: 'Season 2', episodes:[]},
+        {id:2, name: 'Season 3', episodes:[]}
+    ]
 }
 
 test('renders testShow and no selected Season without errors', ()=>{
